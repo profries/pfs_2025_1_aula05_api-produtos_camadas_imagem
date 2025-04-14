@@ -10,12 +10,19 @@ const upload = multer({dest:'./uploads/'});
 router.get('/', produtoController.listar);
 
 //inserir produto
-router.post('/', produtoController.inserir)
+router.post('/', produtoController.inserir);
 
 //buscar produto por id
-router.get('/:id', produtoController.buscarPorId)
+router.get('/:id', produtoController.buscarPorId);
 
- router.post('/imagens/upload', upload.single('imagem') , async (req: Request, res: Response): Promise<any>  => {
+//atualizar produto
+router.put('/:id', produtoController.atualizar);
+
+//deletar produto
+router.delete('/:id', produtoController.deletar);
+
+//Upload
+router.post('/imagens/upload', upload.single('imagem') , async (req: Request, res: Response): Promise<any>  => {
     console.log(req.file);
     res.send("Imagem carregada com sucesso!");
 });

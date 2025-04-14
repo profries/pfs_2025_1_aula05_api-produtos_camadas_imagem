@@ -14,7 +14,7 @@ async function inserir(req: Request, res: Response): Promise<any> {
         res.status(201).json(produtoInserido);
     }
     catch(err:any) {
-        res.status(err.id).json(err.msg);
+        res.status(err.id).json(err);
     }
 }
 
@@ -24,12 +24,35 @@ async function buscarPorId(req: Request, res: Response): Promise<any> {
         const produto = produtoService.buscarPorId(id);
         res.json(produto);
     } catch (err: any) {
-        res.status(err.id).json(err.msg);
+        res.status(err.id).json(err);
+    }
+}
+
+async function atualizar(req: Request, res: Response): Promise<any> {
+    const id = parseInt(req.params.id);
+    const produto = req.body;
+    try{ 
+        const produtoAtualizado = produtoService.atualizar(id, produto);
+        res.json(produtoAtualizado);
+    } catch (err: any) {
+        res.status(err.id).json(err);
+    }
+}
+
+async function deletar(req: Request, res: Response): Promise<any> {
+    const id = parseInt(req.params.id);
+    try{ 
+        const produto = produtoService.deletar(id);
+        res.json(produto);
+    } catch (err: any) {
+        res.status(err.id).json(err);
     }
 }
 
 export default {
     listar,
     inserir,
-    buscarPorId
+    buscarPorId,
+    atualizar,
+    deletar
 }

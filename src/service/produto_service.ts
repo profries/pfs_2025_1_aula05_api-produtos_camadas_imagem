@@ -21,8 +21,29 @@ function buscarPorId(id: number): Produto {
     return produto;
 }
 
+function atualizar(id: number, data: any): Produto {
+    if(!data.nome || !data.categoria || !data.preco) {
+        throw ({id: 400, msg: "Falta dados obrigatorios"});    
+    }
+    let produtoAtualizado = produtoRepository.atualizar(id, data);
+    if (!produtoAtualizado) {
+        throw ({id: 404, msg: "Produto nao encontrado"});    
+    }    
+    return produtoAtualizado;
+}
+
+function deletar(id: number): Produto {
+    let produtoDeletado = produtoRepository.deletar(id);
+    if (!produtoDeletado) {
+        throw ({id: 404, msg: "Produto nao encontrado"});    
+    }    
+    return produtoDeletado;
+}
+
 export default {
     listar,
     inserir,
-    buscarPorId
+    buscarPorId,
+    atualizar,
+    deletar
 }
